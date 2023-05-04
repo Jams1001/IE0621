@@ -1,4 +1,5 @@
 `include "intf.sv"
+`include "driver.sv"
 
 module tb_top;
 
@@ -8,6 +9,11 @@ reg rst;
 reg [7:0] mem[65535:0];
 integer i;
 integer f;
+
+intf intf_0(clk, rst);
+
+// Ckass Driver
+driver drvr;
 
 initial
 begin
@@ -20,21 +26,23 @@ begin
     end
 
     // Reset
-    clk = 0;
-    rst = 1;
-    repeat (5) @(posedge clk);
-    rst = 0;
+    //clk = 0;
+    //rst = 1;
+    //repeat (5) @(posedge clk);
+    //rst = 0;
+
+    drvr.reset();
 
     // Load TCM memory
     for (i=0;i<65535;i=i+1)
         mem[i] = 0;
 
-    f = $fopenr("./build/tcm.bin");
-    i = $fread(mem, f);
+    //f = $fopenr("./build/tcm.bin");
+    //i = $fread(mem, f);
     for (i=0;i<65535;i=i+1)
-        u_mem.write(i, mem[i]);
+        u_mem.write(i, 0010000000010001);
 end
-
+//0010000000010001 -> esto es un 1+1
 initial
 begin
     forever
@@ -68,7 +76,6 @@ wire          mem_d_error_w;
 wire [ 10:0]  mem_d_resp_tag_w;
 */
 
-intf intf_0(clk, rst);
 
 riscv_core
 u_dut
