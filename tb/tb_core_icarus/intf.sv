@@ -1,4 +1,4 @@
-interface intf(input logic clk rst);
+interface intf(input logic clk, rst);
   
     // Declaring the signals
     logic          mem_i_rd_w;
