@@ -1,11 +1,8 @@
-`include "intf.sv"
-`include "driver.sv"
-
 module tb_top;
 
 reg clk;
 reg rst;
-
+	
 reg [7:0] mem[65535:0];
 integer i;
 integer f;
@@ -13,34 +10,41 @@ integer f;
 intf intf_0(clk, rst);
 
 // Ckass Driver
-driver drvr;
+  driver drvr = new(intf_0);
 
 initial
 begin
     $display("Starting bench");
 
-    if (`TRACE)
-    begin
-        $dumpfile("waveform.vcd");
-        $dumpvars(0, tb_top);
-    end
-
-    // Reset
-    //clk = 0;
-    //rst = 1;
-    //repeat (5) @(posedge clk);
-    //rst = 0;
+    //if (`TRACE)
+    //begin
+  	$dumpfile("dump.vcd");
+    $dumpvars;
+  	$display("Holi");
+    //end
 
     drvr.reset();
+    $display("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  	// Reset
+    clk = 0;
+    rst = 1;
+    $display("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    //repeat (5) @(posedge clk);
+    $display("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    rst = 0;    
 
     // Load TCM memory
-    for (i=0;i<65535;i=i+1)
+  for (i=0;i<10000;i=i+1) begin
         mem[i] = 0;
+  end
 
     //f = $fopenr("./build/tcm.bin");
     //i = $fread(mem, f);
-    for (i=0;i<65535;i=i+1)
-        u_mem.write(i, 0010000000010001);
+    $readmemb("./binario.txt", mem);
+    for (i=0;i<10000;i=i+1) begin
+        u_mem.write(i, mem[i]);
+	end
+  	#50$finish;
 end
 //0010000000010001 -> esto es un 1+1
 initial
@@ -48,6 +52,7 @@ begin
     forever
     begin 
         clk = #5 ~clk;
+        $monitor(clk);
     end
 end
 
