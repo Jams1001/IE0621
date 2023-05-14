@@ -6,3 +6,5 @@
 `include "uriscv_lsu.v"
 `include "uriscv_muldiv.v"
 `include "riscv_core.v"
+`include "tcm_mem.v"
+`include "tcm_mem_ram.v"

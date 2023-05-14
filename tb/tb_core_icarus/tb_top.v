@@ -1,86 +1,41 @@
 module tb_top;
 
 reg clk;
-reg rst;
-	
-reg [7:0] mem[65535:0];
-integer i;
-integer f;
 
-intf intf_0(clk, rst);
-
-// Ckass Driver
-  driver drvr = new(intf_0);
-
+interface_1 intf_0(clk, tb_top.u_dut.rs1_w, tb_top.u_dut.rs2_w, tb_top.u_dut.rd_w);
+  
 initial
 begin
-    $display("Starting bench");
-
-    //if (`TRACE)
-    //begin
+	$display("Starting bench");
   	$dumpfile("dump.vcd");
     $dumpvars;
-  	$display("Holi");
-    //end
-
-    drvr.reset();
-    $display("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  	// Reset
+    // Reset
     clk = 0;
-    rst = 1;
-    $display("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    //repeat (5) @(posedge clk);
-    $display("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    rst = 0;    
 
-    // Load TCM memory
-  for (i=0;i<10000;i=i+1) begin
-        mem[i] = 0;
-  end
-
-    //f = $fopenr("./build/tcm.bin");
-    //i = $fread(mem, f);
-    $readmemb("./binario.txt", mem);
-    for (i=0;i<10000;i=i+1) begin
-        u_mem.write(i, mem[i]);
-	end
-  	#50$finish;
 end
-//0010000000010001 -> esto es un 1+1
+
 initial
 begin
     forever
     begin 
-        clk = #5 ~clk;
-        $monitor(clk);
+        clk = #1 ~clk;
     end
 end
-
-/*
-wire          mem_i_rd_w;
-wire          mem_i_flush_w;
-wire          mem_i_invalidate_w;
-wire [ 31:0]  mem_i_pc_w;
-wire [ 31:0]  mem_d_addr_w;
-wire [ 31:0]  mem_d_data_wr_w;
-wire          mem_d_rd_w;
-wire [  3:0]  mem_d_wr_w;
-wire          mem_d_cacheable_w;
-wire [ 10:0]  mem_d_req_tag_w;
-wire          mem_d_invalidate_w;
-wire          mem_d_writeback_w;
-wire          mem_d_flush_w;
-wire          mem_i_accept_w;
-wire          mem_i_valid_w;
-wire          mem_i_error_w;
-wire [ 31:0]  mem_i_inst_w;
-wire [ 31:0]  mem_d_data_rd_w;
-wire          mem_d_accept_w;
-wire          mem_d_ack_w;
-wire          mem_d_error_w;
-wire [ 10:0]  mem_d_resp_tag_w;
-*/
-
+  
+initial 
+begin
+    stimulus stim;
+    integer j;
+    integer k;
+    logic [3:0][7:0] instruction;
+    for(j=0; j<10; j=j+1) begin
+        stim = new();
+        instruction = stim.assemble_instruction();
+      for(k=3; k>=0; k=k-1) begin
+          $display("%b", instruction[k]);
+        end
+    end
+end    
 
 riscv_core
 u_dut
@@ -90,7 +45,7 @@ u_dut
 (
     // Inputs
      .clk_i(clk)
-    ,.rst_i(rst)
+  ,.rst_i(intf_0.rst)
     ,.mem_d_data_rd_i(intf_0.mem_d_data_rd_w)
     ,.mem_d_accept_i(intf_0.mem_d_accept_w)
     ,.mem_d_ack_i(intf_0.mem_d_ack_w)
@@ -125,7 +80,7 @@ u_mem
 (
     // Inputs
      .clk_i(clk)
-    ,.rst_i(rst)
+  	,.rst_i(intf_0.rst)
     ,.mem_i_rd_i(intf_0.mem_i_rd_w)
     ,.mem_i_flush_i(intf_0.mem_i_flush_w)
     ,.mem_i_invalidate_i(intf_0.mem_i_invalidate_w)
@@ -152,4 +107,6 @@ u_mem
     ,.mem_d_resp_tag_o(intf_0.mem_d_resp_tag_w)
 );
 
+  testcase test(intf_0);
+  
 endmodule
