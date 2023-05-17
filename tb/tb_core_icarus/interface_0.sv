@@ -1,4 +1,11 @@
-interface interface_1(input logic clk, [4:0]rs1_w, [4:0]rs2_w, [4:0]rd_w);
+interface interface_1(
+  input logic clk,
+  [4:0]		rs1_w,
+  [4:0]		rs2_w,
+  [4:0]		rd_w
+);
+	
+  	
     // Declaring the signals
   	logic	 	   rst;
     logic          mem_i_rd_w;

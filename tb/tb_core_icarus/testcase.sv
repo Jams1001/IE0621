@@ -4,9 +4,9 @@ program testcase(interface_1 intf_1);
   initial begin
     env.drvr.reset();
     
-    env.drvr.write("./binario.txt");
+    env.drvr.write(20);
     
-    #50$finish;
+    #100$finish;
 	end
   
 endprogram

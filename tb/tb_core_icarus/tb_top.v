@@ -2,7 +2,12 @@ module tb_top;
 
 reg clk;
 
-interface_1 intf_0(clk, tb_top.u_dut.rs1_w, tb_top.u_dut.rs2_w, tb_top.u_dut.rd_w);
+interface_1 intf_0(
+  clk,
+  u_dut.rs1_w,
+  u_dut.rs2_w, 
+  u_dut.rd_w
+);
   
 initial
 begin
@@ -21,22 +26,10 @@ begin
         clk = #1 ~clk;
     end
 end
-  
-initial 
-begin
-    stimulus stim;
-    integer j;
-    integer k;
-    logic [3:0][7:0] instruction;
-    for(j=0; j<10; j=j+1) begin
-        stim = new();
-        instruction = stim.assemble_instruction();
-      for(k=3; k>=0; k=k-1) begin
-          $display("%b", instruction[k]);
-        end
-    end
-end    
 
+ 
+  
+  
 riscv_core
 u_dut
 //-----------------------------------------------------------------
