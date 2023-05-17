@@ -7,7 +7,7 @@ class stimulus;
   rand logic [6:0] opcode;
   rand logic [11:0] imm;
   logic [31:0] instr;
-  logic [72:0][7:0] init_instr;
+  logic [291:0][7:0] init_instr;
 
   constraint legal_values {
     rs1 inside {[0:31]};
@@ -50,7 +50,7 @@ class stimulus;
     return {instr[31:24], instr[23:16], instr[15:8], instr[7:0]};
   endfunction
   
-  function logic [72:0][7:0] initialize();
+  function logic [291:0][7:0] initialize();
     init_instr[0] = 8'b01101111;
     init_instr[1] = 8'b00000000;
     init_instr[2] = 8'b00000000;
@@ -76,7 +76,7 @@ class stimulus;
     init_instr[18] = 8'b01000000;
     init_instr[19] = 8'b00010001;
     
-    for (int i = 20; i < 73; i = i + 4) begin
+    for (int i = 20; i < 292; i = i + 4) begin
       init_instr[i]   = 8'b00000000;
       init_instr[i+1] = 8'b00000000;
       init_instr[i+2] = 8'b00000000;
