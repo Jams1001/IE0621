@@ -13,10 +13,10 @@
 (Jams)
 
 ### Scoreboard
-(Oscar)
+El scoreboard almacena un historial de resultados calculados por el modelo de referencia.
 
 ### Modelo de referencia
-(Oscar)
+El modelo de referencia es un código que simula a alto nivel el principal funcionamiento del procesador, con el fin de obtener los resultados que se esperarían en un tiempo menor para posteriormente hacer comparación.
 
 
 ### Monitor
