@@ -8,7 +8,10 @@ interface_1 intf_0(
   clk,
   u_dut.rs1_w,
   u_dut.rs2_w, 
-  u_dut.rd_w
+  u_dut.rd_w,
+  u_dut.opcode_w,
+  u_dut.func3_w,
+  u_dut.func7_w
 );
 
 // dumpfile, dumpvars, and initialazing clk = 0

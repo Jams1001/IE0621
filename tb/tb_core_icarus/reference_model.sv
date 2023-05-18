@@ -77,7 +77,7 @@ class reference_model;
     endcase
     
     //decoder = {reg_file[rd], reg_file[rs1], reg_file[rs2]};
-    sb.get_result(rs2, rs1, rd);
+    sb.get_result(rs2, rs1, rd, opcode, func_3, func_7);
     $display("%b   %b    %b",rd, rs1, rs2);
     endfunction
 

@@ -2,7 +2,10 @@ interface interface_1(
   input logic clk,
   [4:0]		rs1_w,
   [4:0]		rs2_w,
-  [4:0]		rd_w
+  [4:0]		rd_w,
+  [31:0]	opcode_w,
+  [2:0]		func3_w,
+  [6:0]		func7_w
 );
 	
   	
