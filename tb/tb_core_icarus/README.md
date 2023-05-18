@@ -8,9 +8,10 @@
 ---
 
 ### *Generacion de estimulo*
-(Jams)
+Envía instrucciones para el funcionamiento del procesador. Instrucciones que respeten el estándar RISCV.
+Idealmente tendría una función que retorne cada tipo de instrucción de la ISA, de modo que los segmentos de la instrucción que se puedan randomizar se calculen con ```$random``` y obtener una mayor gama de escenarios. ```stimulus.sv``` se utiliza tanto para incializar el DUV como para enviar las pruebas funcionales.
 ### Driver
-(Jams)
+Clase que maneja los task que se envían desde el testbench basado en capas. Sincrooniza los estímulos que se envían al procesador como al modelo de alto nivel (```reference_model.sv```). Escribe directamente en memoria como instancia al reference_model.sv
 
 ### Scoreboard
 El scoreboard almacena un historial de resultados calculados por el modelo de referencia.
