@@ -1,14 +1,17 @@
 module tb_top;
 
+// tb_top clock
 reg clk;
 
+// initializing interface
 interface_1 intf_0(
   clk,
   u_dut.rs1_w,
   u_dut.rs2_w, 
   u_dut.rd_w
 );
-  
+
+// dumpfile, dumpvars, and initialazing clk = 0
 initial
 begin
 	$display("Starting bench");
@@ -19,6 +22,7 @@ begin
 
 end
 
+// loop for clk
 initial
 begin
     forever
@@ -29,7 +33,7 @@ end
 
  
   
-  
+
 riscv_core
 u_dut
 //-----------------------------------------------------------------
@@ -100,6 +104,7 @@ u_mem
     ,.mem_d_resp_tag_o(intf_0.mem_d_resp_tag_w)
 );
 
+  // creating testcase 
   testcase test(intf_0);
   
 endmodule

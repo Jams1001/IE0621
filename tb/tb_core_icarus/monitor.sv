@@ -1,16 +1,23 @@
 class monitor;
+  // monitor blocks
   scoreboard sb;
+
+  // monitor interface
   virtual interface_1 intf;
 
-  //logic [7:0] sb_value;
+  // monitor variables
   int err_count;
   
-          
+  // monitor constructor
   function new(virtual interface_1 intf, scoreboard sb);
     this.intf = intf;
     this.sb = sb;
   endfunction
-          
+
+
+  // First checking, checks registers decode
+  // se utiliza entradas y salidas del interface
+  // Checkers basados en el contexto
   task check();
     err_count = 0;
     forever
