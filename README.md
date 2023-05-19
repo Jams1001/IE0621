@@ -1,4 +1,6 @@
-### uriscv - Another tiny RISC-V implementation
+### uriscv - Another tiny RISC-V implementation - Verification
+
+![Texto alternativo](https://github.com/Jams1001/IE0621/blob/main/diagrama.png)
 
 **OFFICIAL GITHUB:**   [https://github.com/ultraembedded/core_uriscv](https://github.com/ultraembedded/core_uriscv)
 
