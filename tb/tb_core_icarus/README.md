@@ -34,3 +34,5 @@ Este chequea reglas de micro-arquitectura de RISC-V sobre como decodificar las i
 Basandose en los valores obtenidos en el scoreboard, los compara con los obtenidos dentro del uRISC-V 
 por medio del interfaz.
 
+
+![alt text](https://github.com/Jams1001/IE0621/diagrama.png)

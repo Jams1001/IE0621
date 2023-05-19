@@ -5,25 +5,23 @@ class environment;
   	monitor mntr;
   	reference_model ref_model;
 
-	// Interfaces
+		// Interfaces
   	virtual interface_1 intf_1;
-    
-
-	// Constructor
+	
+		// Constructor
   	function new(virtual interface_1 intf_1);
     	$display("Creating environment");
-		// obtaining intf_1 from test
+			// obtaining intf_1 from test
     	this.intf_1 = intf_1;
-		
-		// Initializing enviroment blocks
+				// Initializing enviroment blocks
       	sb = new();	
       	ref_model = new(sb);
       	drvr = new(intf_1, ref_model);
       	mntr = new(intf_1, sb);
-
-		// fork to check concurrently
+			// fork to check concurrently
     	fork 
-    	  mntr.check();
+    	  mntr.check_decode();
+          mntr.check_initial();
     	join_none
   	endfunction
            

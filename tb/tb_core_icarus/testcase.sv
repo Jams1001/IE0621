@@ -7,12 +7,9 @@ program testcase(interface_1 intf_1);
   initial begin
     env.drvr.reset();
     
-    env.drvr.write(20);
+    env.drvr.write(40);
     
-    // limit the time simulation because of EDA max 1 min
-    #100$finish;
+    $finish;
 	end
   
 endprogram
-
-

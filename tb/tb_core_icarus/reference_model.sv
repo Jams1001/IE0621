@@ -39,7 +39,7 @@ class reference_model;
   function void decoder();
 	//Extract the opcode to determinate the type of ins
     opcode = sti[6:0]; 
-    $display("%b",opcode);
+    //$display("%b",opcode);
 	
     case(opcode)
 //Instruction R	
@@ -78,7 +78,7 @@ class reference_model;
     
     //decoder = {reg_file[rd], reg_file[rs1], reg_file[rs2]};
     sb.get_result(rs2, rs1, rd, opcode, func_3, func_7);
-    $display("%b   %b    %b",rd, rs1, rs2);
+    //$display("%b   %b    %b",rd, rs1, func_7);
     endfunction
 
   function void add();

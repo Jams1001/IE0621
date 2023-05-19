@@ -1,6 +1,6 @@
 // Code your testbench here
 // or browse Examples
-`include "interface_0.sv"
+`include "interface_1.sv"
 `include "stimulus.sv"
 `include "scoreboard.sv"
 `include "reference_model.sv"

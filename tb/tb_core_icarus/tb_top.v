@@ -11,9 +11,12 @@ interface_1 intf_0(
   u_dut.rd_w,
   u_dut.opcode_w,
   u_dut.func3_w,
-  u_dut.func7_w
+  u_dut.func7_w,
+  u_dut.reg_file,
+  u_dut.rd_writeen_w,
+  u_dut.rd_q
 );
-
+  
 // dumpfile, dumpvars, and initialazing clk = 0
 initial
 begin
@@ -36,7 +39,7 @@ end
 
  
   
-
+  
 riscv_core
 u_dut
 //-----------------------------------------------------------------
@@ -107,7 +110,8 @@ u_mem
     ,.mem_d_resp_tag_o(intf_0.mem_d_resp_tag_w)
 );
 
-  // creating testcase 
+
+  // creating testcase
   testcase test(intf_0);
   
 endmodule
