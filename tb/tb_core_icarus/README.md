@@ -35,4 +35,4 @@ Basandose en los valores obtenidos en el scoreboard, los compara con los obtenid
 por medio del interfaz.
 
 
-![alt text](https://github.com/Jams1001/IE0621/diagrama.png)
+![alt text]([https://github.com/Jams1001/IE0621/diagrama.png](https://github.com/Jams1001/IE0621/blob/main/diagrama.png))
