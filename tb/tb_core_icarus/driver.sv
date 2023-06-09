@@ -24,15 +24,15 @@ class driver;
   endtask
  
  
-  task write(input int iteration);
+  task write(input int iteration);//sequence
     integer k;
 
     $display("Writing in mem \n");
     
-    repeat (iteration)begin
+    repeat (iteration)begin//sequence
       stim = new();
       @(negedge intf_1.mem_i_valid_w);
-      instruction = stim.assemble_R_type_instruction();
+      instruction = stim //sequence_item assemble_R_type_instruction();
       for(k=0; k<4; k=k+1) begin
         mem[ind] = instruction[k];
         tb_top.u_mem.write(ind, mem[ind]);
@@ -46,22 +46,63 @@ class driver;
   
 endclass
 
-class riscv_item extends uvm_sequence_item;
 
-  rand logic [7:0] data;
-  rand bit   rd;
 
-  // Use utility macros to implement standard functions
-  // like print, copy, clone, etc
-  `uvm_object_utils_begin(riscv_item)
+
+
+
+
+
+
+
+
+
+
+
+class inst_base_item extends uvm_sequence_item;
+
+  rand logic [6:0] funct7;
+  rand logic [4:0] rs2;
+  rand logic [4:0] rs1;
+  rand logic [2:0] funct3;
+  rand logic [4:0] rd;
+  rand logic [6:0] opcode;
+  rand logic [11:0] imm;
+  logic [31:0] instr;
+  logic [3:0][7:0] init_instr;
+
+  `uvm_object_utils_begin(inst_base_item)
     `uvm_field_int (data, UVM_DEFAULT)
-    `uvm_field_int (rd, UVM_DEFAULT)
   `uvm_object_utils_end
 
   function new(string name = "riscv_item");
     super.new(name);
   endfunction
 endclass
+
+
+class r_item extends inst_base_item;
+
+  rand logic [7:0] data;
+
+
+
+  function new(string name = "r_item");
+    super.new(name);
+  endfunction
+endclass
+
+
+class i_item extends inst_base_item;
+
+  rand logic [7:0] data;
+
+  function new(string name = "i_item");
+    super.new(name);
+  endfunction
+endclass
+
+
 
 class gen_item_seq extends uvm_sequence;
   `uvm_object_utils(gen_item_seq)
@@ -74,7 +115,11 @@ class gen_item_seq extends uvm_sequence;
   constraint c1 { num inside {[2:5]}; }
 
   virtual task body();
-    riscv_item r_item = riscv_item::type_id::create("r_item");
+    r_item r_item = r_item::type_id::create("r_item");
+    i_item i_item = i_item::type_id::create("r_item");
+    j_item j_item = j_item::type_id::create("r_item");
+
+    
     for (int i = 0; i < num; i ++) begin
         start_item(r_item);
     	r_item.randomize();
@@ -116,14 +161,13 @@ class riscv_driver extends uvm_driver #(riscv_item);
       `uvm_info("DRV", $sformatf("Wait for item from sequencer"), UVM_LOW)
       seq_item_port.get_next_item(r_item);
       fork
-        drive_riscv(r_item);
-        read_riscv(r_item);
+        write_riscv(r_item);
       join
       seq_item_port.item_done();
     end
   endtask  
 
-  virtual task drive_riscv(riscv_item r_item);
+  virtual task write_riscv(riscv_item r_item);
     if(r_item.rd ==0)   
       begin
         @ (negedge riscv_intf.clk);
@@ -132,16 +176,6 @@ class riscv_driver extends uvm_driver #(riscv_item);
         riscv_intf.wr_en = 1;
         @ (negedge riscv_intf.clk);
         riscv_intf.wr_en = 0;
-      end
-  endtask
-  
-  virtual task read_riscv(riscv_item r_item);
-    if(r_item.rd ==1)
-      begin
-        @ (negedge riscv_intf.clk);
-        riscv_intf.rd_en = 1;
-        @ (negedge riscv_intf.clk);
-        riscv_intf.rd_en = 0;
       end
   endtask
        
