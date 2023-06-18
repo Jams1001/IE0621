@@ -38,6 +38,7 @@ class monitor;
         // Decode Checking
         $display("======================");
         $display("sb: %d", sb.i);
+        $display("errors: %d", err_count);
         $display("cpu.mem_i_inst_w: %b\n",intf.mem_i_inst_w);
         $display("cpu.mem_d_data_rd_w: %b\n",intf.mem_d_data_rd_w);
         // Checking rs1, rs2, func7, func3, and rd
