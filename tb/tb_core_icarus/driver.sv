@@ -1,64 +1,3 @@
-class driver;
-  
-  stimulus stim;
-  reference_model ref_m;
-  virtual interface_1 intf_1;
-  logic [3:0][7:0] instruction;
-  logic [3:0][7:0] initial_instrc;
-  logic [2:0][31:0]reg_ref_m;
-  integer ind = 0;
-  reg [7:0] mem [65535:0];
-  
-  
-  function new(virtual interface_1 intf_1, reference_model ref_m);
-    this.intf_1 = intf_1;
-    this.ref_m = ref_m;
-  endfunction
-
-  task reset();
-    $display("Reset\n");
-    intf_1.rst = 1;
-    repeat (5) @(posedge intf_1.clk);
-    intf_1.rst = 0;
- 
-  endtask
- 
- 
-  task write(input int iteration);//sequence
-    integer k;
-
-    $display("Writing in mem \n");
-    
-    repeat (iteration)begin//sequence
-      stim = new();
-      @(negedge intf_1.mem_i_valid_w);
-      instruction = stim //sequence_item assemble_R_type_instruction();
-      for(k=0; k<4; k=k+1) begin
-        mem[ind] = instruction[k];
-        tb_top.u_mem.write(ind, mem[ind]);
-        ind++;
-      end
-      ref_m.get_sti({instruction[3], instruction[2], instruction[1], instruction[0]});
-    end
-    
-    
-  endtask
-  
-endclass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class inst_base_item extends uvm_sequence_item;
 
   logic [6:0] funct7;
@@ -68,8 +7,9 @@ class inst_base_item extends uvm_sequence_item;
   rand logic [4:0] rd;
   rand logic [6:0] opcode;
   rand logic [11:0] imm;
-  logic [31:0] instr;
-  logic [3:0][7:0] init_instr;
+  rand logic [31:0] instr;
+  rand logic [3:0][7:0] init_instr;
+  reg [7:0] mem [65535:0];
 
   `uvm_object_utils_begin(inst_base_item)
     `uvm_field_int (funct7, UVM_DEFAULT)
@@ -143,8 +83,6 @@ endclass
 
 
 
-
-
 class riscv_driver extends uvm_driver #(riscv_item);
 
   `uvm_component_utils (riscv_driver)
@@ -165,6 +103,7 @@ class riscv_driver extends uvm_driver #(riscv_item);
     super.connect_phase(phase);
   endfunction
 
+
   virtual task run_phase(uvm_phase phase);
     super.run_phase(phase);
     forever begin
@@ -177,7 +116,6 @@ class riscv_driver extends uvm_driver #(riscv_item);
       `uvm_info("DRV", $sformatf("Wait for item from sequencer"), UVM_LOW)
       seq_item_port.get_next_item(i_item);
 
-
       write_riscv(r_item.instr);
       write_riscv(i_item.instr);
       seq_item_port.item_done();
@@ -186,6 +124,7 @@ class riscv_driver extends uvm_driver #(riscv_item);
 
 
   virtual task write_riscv(riscv_item r_item);
+  
     for(k=0; k<4; k=k+1) begin
       mem[ind] = instruction[k];
       tb_top.u_mem.write(ind, mem[ind]);
@@ -197,14 +136,11 @@ class riscv_driver extends uvm_driver #(riscv_item);
 
 
 
-
-
   virtual task riscv_reset();  // Reset method
     display("Reset\n");
     riscv_intf.rst = 1;
     repeat (5) @(posedge riscv_intf.clk);
     riscv_intf.rst = 0;
-
   endtask
         
   
