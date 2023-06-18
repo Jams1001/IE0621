@@ -95,7 +95,7 @@ module top_hdl();
     $dumpfile("dump.vcd"); 
     $dumpvars;
 
-    uvm_config_db #(virtual fifo_intf)::set (null, "uvm_test_top", "VIRTUAL_INTERFACE", intf);
+    uvm_config_db #(virtual fifo_intf)::set (null, "uvm_test_top", "VIRTUAL_INTERFACE", intf_1);
 
   end
   
