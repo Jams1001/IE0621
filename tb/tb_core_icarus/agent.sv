@@ -13,7 +13,7 @@ class riscv_agent_active extends uvm_agent;
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     
-    if(uvm_config_db #(virtual riscv_intf)::get(this, "", "VIRTUAL_INTERFACE", intf) == 0) begin
+    if(uvm_config_db #(virtual interface_1)::get(this, "", "VIRTUAL_INTERFACE", intf) == 0) begin
       `uvm_fatal("INTERFACE_CONNECT", "Could not get from the database the virtual interface for the TB")
     end
     
@@ -23,7 +23,7 @@ class riscv_agent_active extends uvm_agent;
     
     riscv_mntr_wr = riscv_monitor_wr::type_id::create ("riscv_mntr_wr", this);
     
-    //uvm_config_db #(virtual riscv_intf)::set (null, "uvm_test_top.env.riscv_ag.riscv_drv", "VIRTUAL_INTERFACE", intf);    
+    //uvm_config_db #(virtual interface_1)::set (null, "uvm_test_top.env.riscv_ag.riscv_drv", "VIRTUAL_INTERFACE", intf);    
 
   endfunction
 
@@ -40,20 +40,20 @@ class riscv_agent_passive extends uvm_agent;
     super.new(name, parent);
   endfunction
   
-  virtual riscv_intf intf;
+  virtual interface_1 intf;
   
   riscv_monitor_rd riscv_mntr_rd;
   
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     
-    if(uvm_config_db #(virtual riscv_intf)::get(this, "", "VIRTUAL_INTERFACE", intf) == 0) begin
+    if(uvm_config_db #(virtual interface_1)::get(this, "", "VIRTUAL_INTERFACE", intf) == 0) begin
       `uvm_fatal("INTERFACE_CONNECT", "Could not get from the database the virtual interface for the TB")
     end
     
     riscv_mntr_rd = riscv_monitor_rd::type_id::create ("riscv_mntr_rd", this);
 
-    //uvm_config_db #(virtual riscv_intf)::set (null, "uvm_test_top.env.riscv_ag.riscv_drv", "VIRTUAL_INTERFACE", intf);    
+    //uvm_config_db #(virtual interface_1)::set (null, "uvm_test_top.env.riscv_ag.riscv_drv", "VIRTUAL_INTERFACE", intf);    
 
   endfunction
 
