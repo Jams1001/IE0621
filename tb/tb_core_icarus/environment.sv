@@ -6,7 +6,7 @@ class riscv_env extends uvm_env;
     super.new (name, parent);
   endfunction
   
-  virtual intf1 riscv_intf;
+  virtual interface_1 riscv_intf;
   riscv_agent_active riscv_ag_active;
   riscv_agent_passive riscv_ag_passive;
   riscv_scoreboard riscv_sb;
@@ -14,7 +14,7 @@ class riscv_env extends uvm_env;
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     
-    if(uvm_config_db #(virtual intf1)::get(this, "", "VIRTUAL_INTERFACE", riscv_intf) == 0) begin
+    if(uvm_config_db #(virtual interface_1)::get(this, "", "VIRTUAL_INTERFACE", riscv_intf) == 0) begin
       `uvm_fatal("INTERFACE_CONNECT", "Could not get from the database the virtual interface for the TB")
     end
     
