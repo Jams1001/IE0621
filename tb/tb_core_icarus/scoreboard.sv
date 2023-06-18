@@ -41,4 +41,15 @@ class riscv_scoreboard extends uvm_scoreboard;
       if(ref_model.size() > 0)
         `uvm_warning("SB Warn", $sformatf("riscv not empty at check phase. riscv still has 0x%0h data items allocated", ref_model.size()));
 	endfunction
+
+   // function to not repeat code
+  function void verfy(logic [$] cpu, ref_val, string name);
+    if (cpu==ref_val) begin
+       `uvm_info(" * PASS * ", $sformatf("cpu.%s: %b  ::  ref.%s: %b\n", name, cpu, name, ref_val), UVM_MEDIUM);
+    end
+    else begin
+      `uvm_error(" * ERROR * ", $sformatf("cpu.%s: %b  ::  ref.%s: %b\n", name, cpu, name, ref_val));
+    end
+  endfunction
+
 endclass
