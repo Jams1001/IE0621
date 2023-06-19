@@ -7,7 +7,7 @@ interface interface_1(
   [2:0]		func3_w,
   [6:0]		func7_w,
   [31:0] 	reg_file[0:31],
-  			rd_writeen_w,
+  bit	rd_writeen_w,
   [4:0]		rd_q
 );
 	

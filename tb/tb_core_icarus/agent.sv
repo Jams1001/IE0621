@@ -44,7 +44,7 @@ class riscv_agent_passive extends uvm_agent;
   
   riscv_monitor_rd riscv_mntr_rd;
   
- virtual function void build_phase(uvm_phase phase);
+  virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     
     if(uvm_config_db #(virtual interface_1)::get(this, "", "VIRTUAL_INTERFACE", intf) == 0) begin
@@ -60,4 +60,5 @@ class riscv_agent_passive extends uvm_agent;
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
   endfunction
+
 endclass

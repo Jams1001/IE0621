@@ -11,7 +11,7 @@ class riscv_scoreboard extends uvm_scoreboard;
     uvm_analysis_imp_drv #(riscv_item, riscv_scoreboard) riscv_drv;
     uvm_analysis_imp_mon #(riscv_item, riscv_scoreboard) riscv_mon;
 
-    logic [7:0] ref_model [$];  
+  logic [31:0] ref_model [$];  
   
 	function void build_phase (uvm_phase phase);
       riscv_drv = new ("riscv_drv", this);
@@ -19,17 +19,17 @@ class riscv_scoreboard extends uvm_scoreboard;
 	endfunction
 
     virtual function void write_drv (riscv_item item);
-      `uvm_info ("drv", $sformatf("Data received = 0x%0h", item.data), UVM_MEDIUM)
-      ref_model.push_back(item.data);
+      `uvm_info ("drv", $sformatf("Data received = 0x%0h", item.instr), UVM_MEDIUM)
+      ref_model.push_back(item.instr);
 	endfunction
   
     virtual function void write_mon (riscv_item item);
-      `uvm_info ("mon", $sformatf("Data received = 0x%0h", item.data), UVM_MEDIUM)
-      if (item.data !== ref_model.pop_front()) begin
+      `uvm_info ("mon", $sformatf("Data received = 0x%0h", item.instr), UVM_MEDIUM)
+      if (item.instr !== ref_model.pop_front()) begin
         `uvm_error("SB error", "Data mismatch");
       end
       else begin
-        `uvm_info("SB PASS", $sformatf("Data received = 0x%0h", item.data), UVM_MEDIUM);
+        `uvm_info("SB PASS", $sformatf("Data received = 0x%0h", item.instr), UVM_MEDIUM);
       end
     endfunction
 
@@ -43,7 +43,7 @@ class riscv_scoreboard extends uvm_scoreboard;
 	endfunction
 
    // function to not repeat code
-  function void verfy(logic [$] cpu, ref_val, string name);
+  function void verfy(logic [6:0] cpu, ref_val, string name);
     if (cpu==ref_val) begin
        `uvm_info(" * PASS * ", $sformatf("cpu.%s: %b  ::  ref.%s: %b\n", name, cpu, name, ref_val), UVM_MEDIUM);
     end

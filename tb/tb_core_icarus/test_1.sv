@@ -33,6 +33,11 @@ class test_basic extends uvm_test;
   virtual task run_phase(uvm_phase phase);
 
     phase.raise_objection (this);
+    
+    seq = gen_item_seq::type_id::create("seq");
+    
+    seq.randomize();
+    seq.start(env.riscv_ag_active.riscv_seqr);
 
     uvm_report_info(get_full_name(),"Init Start", UVM_LOW);
     
@@ -40,11 +45,7 @@ class test_basic extends uvm_test;
 
     uvm_report_info(get_full_name(),"Init Done", UVM_LOW);
     
-    seq = gen_item_seq::type_id::create("seq");
-    
-    seq.randomize();
-    seq.start(env.riscv_ag_active.riscv_seqr);
-    
+    #200;
     phase.drop_objection (this);
   endtask
 
