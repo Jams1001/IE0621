@@ -17,7 +17,8 @@ module top_hdl();
     u_dut.func7_w,
     u_dut.reg_file,
     u_dut.rd_writeen_w,
-    u_dut.rd_q
+    u_dut.rd_q,
+    u_dut.imm12_r
   );
   
   // DUT connection	
@@ -95,7 +96,7 @@ module top_hdl();
     $dumpfile("dump.vcd"); 
     $dumpvars;
 
-    uvm_config_db #(virtual fifo_intf)::set (null, "uvm_test_top", "VIRTUAL_INTERFACE", intf_1);
+    uvm_config_db #(virtual interface_1)::set (null, "uvm_test_top", "VIRTUAL_INTERFACE", intf_1);
 
   end
   
