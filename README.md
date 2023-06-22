@@ -1,6 +1,10 @@
 ### uriscv - Another tiny RISC-V implementation - Verification
 
+Layer-based Testbench
 ![Texto alternativo](https://github.com/Jams1001/IE0621/blob/main/diagrama.png)
+
+UVM-based Testbench
+![Texto alternativo](https://github.com/Jams1001/IE0621/blob/main/diagrama2.png)
 
 **OFFICIAL GITHUB:**   [https://github.com/ultraembedded/core_uriscv](https://github.com/ultraembedded/core_uriscv)
 
